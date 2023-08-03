@@ -8,56 +8,39 @@ form.addEventListener("submit", (event) => {
   const entries = new FormData(event.target);
   const { dividend, divider } = Object.fromEntries(entries);
 
+  // Scenario: Validation when values are missing
+  if (!dividend || !divider) {
+    result.innerText = "Division not performed. Both values are required in inputs. Try again.";
+    return;
+  }
+
+  // Scenario: Providing anything that is not a number should crash the program
   if (isNaN(dividend) || isNaN(divider)) {
-    handleCriticalError("Something critical went wrong. Please reload the page");
+    document.body.innerHTML = "<h1>Something critical went wrong. Please reload the page</h1>";
+    console.error("Invalid input. Please provide valid numbers.");
     return;
   }
 
-  if (divider.trim() === "" || dividend.trim() === "") {
-    handleValidationError("Division not performed. Both values are required in inputs. Try again");
+  const dividendNum = parseFloat(dividend);
+  const dividerNum = parseFloat(divider);
+
+  // Scenario: An invalid division should log an error in the console
+  if (dividerNum === 0 ) {
+    result.innerText = "Division not performed. Invalid number provided. Try again.";
+    console.error("Invalid division by zero.");
     return;
   }
 
-  const dividendValue = parseInt(dividend);
-  const dividerValue = parseInt(divider);
+  const quotient = dividendNum / dividerNum;
+  const isWholeNumber = Number.isInteger(quotient);
 
-  if (dividerValue === 0) {
-    handleValidationError("Division not performed. Cannot divide by zero. Try again");
+  // Scenario: Dividing numbers result in a decimal number
+  if (!isWholeNumber) {
+    result.innerText = Math.floor(quotient);
     return;
   }
 
-  try {
-    if (!Number.isSafeInteger(dividendValue) || !Number.isSafeInteger(dividerValue)) {
-      throw new Error("Invalid number provided.");
-    }
-
-    if (dividendValue % dividerValue !== 0) {
-      throw new Error("Division result is not a whole number.");
-    }
-
-    const divisionResult = dividendValue / dividerValue;
-    result.innerText = divisionResult;
-  } catch (error) {
-    handleInvalidDivision("Division not performed. " + error.message + " Try again");
-    console.error(error);
-  }
+  // Scenario: Dividing numbers result in a whole number
+  result.innerText = quotient;
 });
-
-function handleValidationError(errorMessage) {
-  result.innerText = errorMessage;
-  console.error(errorMessage);
-}
-
-function handleInvalidDivision(errorMessage) {
-  result.innerText = errorMessage;
-  console.error(errorMessage);
-}
-
-function handleCriticalError(errorMessage) {
-  result.innerText = "Something critical went wrong. Please reload the page";
-  console.error(errorMessage);
-  console.trace(); // Log the call stack to the console for critical errors.
-}
-
-
 
