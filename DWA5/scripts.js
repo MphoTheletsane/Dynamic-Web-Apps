@@ -25,9 +25,9 @@ form.addEventListener("submit", (event) => {
   const dividerNum = parseFloat(divider);
 
   // Scenario: An invalid division should log an error in the console
-  if (dividerNum === 0 ) {
+  if (dividerNum < 0 ) {
     result.innerText = "Division not performed. Invalid number provided. Try again.";
-    console.error("Invalid division by zero.");
+    console.error("Please provide valid numbers.");
     return;
   }
 
