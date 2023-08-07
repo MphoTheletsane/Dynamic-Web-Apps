@@ -30,7 +30,8 @@ form.addEventListener("submit", (event) => {
     console.error("Please provide valid numbers.");
     return;
   }
-
+  
+  // Quotient is a result obtained by dividing one quantity by another
   const quotient = dividendNum / dividerNum;
   const isWholeNumber = Number.isInteger(quotient);
 
@@ -41,6 +42,7 @@ form.addEventListener("submit", (event) => {
   }
 
   // Scenario: Dividing numbers result in a whole number
-  result.innerText = quotient;
+
+  result.innerText = quotient; 
 });
 
