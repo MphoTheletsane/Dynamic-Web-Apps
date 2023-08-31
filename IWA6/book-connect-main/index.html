@@ -26,10 +26,20 @@
       rel="stylesheet"
     />
 
-    <script src="./scripts.js"></script>
-    <script src="./data.js"></script>
+    <script src="./scripts.js" defer type="module"></script>
+    <script src="book-preview.js" defer type="module"></script>
+    
   </head>
   <body>
+     <book-preview>
+        data-author="authorId"
+        data-id="bookId"
+        data-image="bookImage.jpg"
+        data-title="Book Title"
+    </book-preview>
+
+
+
 
     <header class="header">
       <div class="header__inner">
